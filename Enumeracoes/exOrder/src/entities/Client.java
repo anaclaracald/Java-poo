@@ -1,8 +1,11 @@
 package entities;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Client {
+    private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
     private String name;
     private String email;
     private Date birthDate;
@@ -15,11 +18,10 @@ public class Client {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Client{");
-        sb.append("name='").append(name).append('\'');
-        sb.append(", email='").append(email).append('\'');
-        sb.append(", birthDate=").append(birthDate);
-        sb.append('}');
+        final StringBuilder sb = new StringBuilder("Client: ");
+        sb.append("\nName='").append(name).append('\'');
+        sb.append("Email=").append(email).append('\'');
+        sb.append("BirthDate=").append(sdf.format(birthDate));
         return sb.toString();
     }
 
