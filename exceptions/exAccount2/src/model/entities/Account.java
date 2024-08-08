@@ -1,5 +1,7 @@
 package model.entities;
 
+import model.exceptions.DomainExceptions;
+
 public class Account {
     private Integer number;
     private String holder;
@@ -38,20 +40,29 @@ public class Account {
     }
 
     public void deposit(Double amount){
-
+        balance += amount;
     }
 
-    public void withdraw(Double amount){
+    public void withdraw(Double amount) throws DomainExceptions {
+       validateWithdraw(amount);
+        balance -= amount;
+    }
 
+    public void validateWithdraw(Double amount) throws DomainExceptions {
+        if(amount >= withdrawLimit){
+            throw new DomainExceptions("Withdraw error: Withdraw limit must be bigger than amount.");
+        } if (amount >= balance){
+            throw new DomainExceptions("Withdraw error: The balance must be bigger than amount.");
+        }
     }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Account{");
-        sb.append("number=").append(number);
-        sb.append(", holder='").append(holder).append('\'');
-        sb.append(", balance=").append(balance);
-        sb.append(", withdrawLimit=").append(withdrawLimit);
+        final StringBuilder sb = new StringBuilder("Account {");
+        sb.append("number: ").append(number);
+        sb.append(", holder: ").append(holder).append('\'');
+        sb.append(", balance: ").append(balance);
+        sb.append(", withdrawLimit: ").append(withdrawLimit);
         sb.append('}');
         return sb.toString();
     }
